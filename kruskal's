@@ -90,7 +90,6 @@ int main() {
         cin >> A[i].u >> A[i].v >> A[i].w;
     }
 
-    // Sort the edges based on their weights and lexicographical order
     kruskal.quickSort(A, 0, num_edges - 1);
 
     for (int k = 0; k < num_edges; k++) {
