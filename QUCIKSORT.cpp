@@ -51,6 +51,7 @@ void PrintArray(int A[], int size)
 int main()
 {
     int A[100];
+    int n;
     cout<<"Enter the number of elements in the array"<<endl;
     cin>>n;
     cout<<"Enter "<<n<<" elements: ";
