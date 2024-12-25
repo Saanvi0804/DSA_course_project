@@ -73,7 +73,9 @@ public:
     }
 
     bool isEmpty() 
+    {
         return size == 0;
+    }
 };
 
 int main() 
