@@ -1,24 +1,24 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-class PriorityQueue {
+class PriorityQueue 
+{
 private:
-    vector<int> heap;
-    void heapify(int k)
-    {
-        int n = heap.size();
+    int heap[100];
+    int size;
+
+    void heapify(int k) {
         bool Heap = false;
 
-        while (!Heap && 2 * k <= n - 1)
+        while (!Heap && 2 * k <= size - 1) 
         {
             int j = 2 * k + 1;
-            if (j + 1 < n && heap[j] < heap[j + 1])
+            if (j + 1 < size && heap[j] < heap[j + 1])
                 j++;
 
             if (heap[k] >= heap[j])
                 Heap = true;
-            else
+            else 
             {
                 swap(heap[k], heap[j]);
                 k = j;
@@ -27,63 +27,62 @@ private:
     }
 
 public:
-    PriorityQueue() {}
-    void insert(int value)
+    PriorityQueue() : size(0) {}
+
+    void insert(int value) 
     {
-        heap.push_back(value);
-        int k = heap.size() - 1;
-        while (k > 0 && heap[k] > heap[(k - 1) / 2])
+        heap[size++] = value;
+        int k = size - 1;
+        while (k > 0 && heap[k] > heap[(k - 1) / 2]) 
         {
             swap(heap[k], heap[(k - 1) / 2]);
             k = (k - 1) / 2;
         }
     }
 
-    int removeTop() {
-        if (heap.empty())
+    int removeTop() 
+   {
+        if (size == 0) 
         {
             cout << "Priority Queue is empty!" << endl;
             return -1;
         }
 
         int maxElement = heap[0];
-        heap[0] = heap.back();
-        heap.pop_back();
+        heap[0] = heap[--size];
         heapify(0);
         return maxElement;
     }
 
-    int top()
-    {
-        if (!heap.empty())
-           return heap[0];
+    int top() {
+        if (size > 0)
+            return heap[0];
         return -1;
     }
 
-
-    void printQueue() {
-        if (heap.empty()) {
+    void printQueue() 
+    {
+        if (size == 0) 
+        {
             cout << "Priority Queue is empty!" << endl;
             return;
         }
-        for (int val : heap) {
-            cout << val << " ";
-        }
+        for (int i = 0; i < size; i++) 
+            cout << heap[i] << " ";
         cout << endl;
     }
 
-
-    bool isEmpty() {
-        return heap.empty();
-    }
+    bool isEmpty() 
+        return size == 0;
 };
 
-int main() {
+int main() 
+{
     PriorityQueue pq;
 
     int choice, value;
 
-    while (1)
+    while (1) 
     {
 
         cout << "\nPriority Queue Operations:\n";
@@ -95,8 +94,7 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice)
-        {
+        switch (choice) {
             case 1:
                 cout << "Enter the element to insert: ";
                 cin >> value;
