@@ -1,19 +1,15 @@
 #include <iostream>
-#include <cstdlib>
 using namespace std;
 
-struct tree
-{
-    int data;
-    struct tree* left;
-    struct tree* right;
-};
-
-typedef struct tree TREE;
-
-class BST
-{
+class BST {
 public:
+    struct tree {
+        int data;
+        tree* left;
+        tree* right;
+    };
+    typedef struct tree TREE;
+
     TREE* insert_into_bst(TREE*, int);
     void inorder(TREE*);
     void preorder(TREE*);
@@ -21,11 +17,9 @@ public:
     TREE* delete_from_bst(TREE*, int);
 };
 
-TREE* BST::insert_into_bst(TREE* root, int data)
-{
-    TREE* newnode = (TREE*)malloc(sizeof(TREE));
-    if (newnode == NULL)
-    {
+BST::TREE* BST::insert_into_bst(TREE* root, int data) {
+    TREE* newnode = new TREE; // Use new instead of malloc
+    if (newnode == NULL) {
         cout << "Memory allocation failed" << endl;
         return root;
     }
@@ -33,8 +27,7 @@ TREE* BST::insert_into_bst(TREE* root, int data)
     newnode->left = NULL;
     newnode->right = NULL;
 
-    if (root == NULL)
-    {
+    if (root == NULL) {
         root = newnode;
         cout << "Root node inserted into tree" << endl;
         return root;
@@ -43,8 +36,7 @@ TREE* BST::insert_into_bst(TREE* root, int data)
     TREE* currnode = root;
     TREE* parent = NULL;
 
-    while (currnode != NULL)
-    {
+    while (currnode != NULL) {
         parent = currnode;
         if (newnode->data < currnode->data)
             currnode = currnode->left;
@@ -85,7 +77,7 @@ void BST::postorder(TREE* root) {
     }
 }
 
-TREE* BST::delete_from_bst(TREE* root, int data) {
+BST::TREE* BST::delete_from_bst(TREE* root, int data) {
     TREE* currnode = root;
     TREE* parent = NULL;
     TREE* successor = NULL;
@@ -113,12 +105,9 @@ TREE* BST::delete_from_bst(TREE* root, int data) {
         p = currnode->right;
     else if (currnode->right == NULL)
         p = currnode->left;
-    else {
-
+    else{
         successor = currnode->right;
         TREE* successorParent = currnode;
-
-        // Find the in-order successor (smallest in right subtree)
         while (successor->left != NULL) {
             successorParent = successor;
             successor = successor->left;
@@ -126,38 +115,33 @@ TREE* BST::delete_from_bst(TREE* root, int data) {
 
         currnode->data = successor->data;
 
-        // Remove the successor node
         if (successorParent->left == successor)
             successorParent->left = successor->right;
         else
             successorParent->right = successor->right;
 
-        free(successor);
+        delete successor;
         return root;
     }
 
     if (parent == NULL) {
-        free(currnode);
+        delete currnode; 
         return p;
     }
-=
     if (currnode == parent->left)
         parent->left = p;
     else
         parent->right = p;
 
-    free(currnode);
+    delete currnode; 
     return root;
 }
 
 int main() {
     BST bst;
-    TREE* root = NULL;
-    int i=0;
-    int k;
+    BST::TREE* root = NULL;
     int choice = 0;
     int data = 0;
-    set<int> seen_duplicates;
 
     while (1) {
         cout << "\n ****** MENU ******\n";
@@ -166,7 +150,6 @@ int main() {
         cout << "3. Preorder traversal\n";
         cout << "4. Postorder traversal\n";
         cout << "5. Delete from BST\n";
-
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -180,8 +163,7 @@ int main() {
         case 2:
             if (root == NULL)
                 cout << "Tree is empty\n";
-            else
-            {
+            else {
                 cout << "Inorder traversal is...\n";
                 bst.inorder(root);
                 cout << endl;
@@ -201,8 +183,7 @@ int main() {
         case 4:
             if (root == NULL)
                 cout << "Tree is empty\n";
-            else
-            {
+            else {
                 cout << "Postorder traversal is...\n";
                 bst.postorder(root);
                 cout << endl;
@@ -215,10 +196,9 @@ int main() {
             root = bst.delete_from_bst(root, data);
             break;
 
-            default:
-                cout << "Exiting the program.\n";
-                return 0;
-
+        default:
+            cout << "Exiting the program.\n";
+            return 0;
         }
     }
 
