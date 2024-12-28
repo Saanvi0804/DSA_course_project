@@ -43,7 +43,7 @@ void heap_sort(int a[], int n)
 
 int main() 
 {
-    int a[10], n;
+    int a[100], n;
     cout << "Enter size:" << endl;
     cin >> n;
     cout << "Enter elements:" << endl;
