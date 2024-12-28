@@ -1,5 +1,0 @@
-1, Ramesh Kumar, 123 MG Road, Bangalore, rameshk@gmail.com, 9876543210
-2, Sita Verma, 456 JP Nagar, Delhi, sitaverma@yahoo.com, 8765432109
-3, Arjun Patel, 789 Indiranagar, Mumbai, arjunpatel@gmail.com, 7654321098
-4, Priya Singh, 321 Koramangala, Chennai, priyasingh@hotmail.com, 6543210987
-5, Vikram Sharma, 654 Whitefield, Hyderabad, vikramsharma@aol.com, 5432109876
