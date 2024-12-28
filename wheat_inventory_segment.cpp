@@ -1,29 +1,30 @@
 #include <iostream>
-#include <climits> 
+#include <climits>
+#include <fstream>
 using namespace std;
 #define MAX 100
 
-class segtree 
+class segtree
 {
 public:
     int size;
-    int tree[MAX * 4]; 
+    int tree[MAX * 4];
     void build(int index, int low, int high, int arr[]);
     int query(int index, int low, int high, int l, int r);
     segtree(int n, int arr[]);
 };
 
-segtree::segtree(int n, int arr[]) 
+segtree::segtree(int n, int arr[])
 {
     size = n;
     build(0, 0, n - 1, arr);
 }
 
-void segtree::build(int index, int low, int high, int arr[]) 
+void segtree::build(int index, int low, int high, int arr[])
 {
-    if (low == high) 
+    if (low == high)
         tree[index] = arr[low];
-    else 
+    else
     {
         int mid = (low + high) / 2;
         build(2 * index + 1, low, mid, arr);
@@ -32,15 +33,14 @@ void segtree::build(int index, int low, int high, int arr[])
     }
 }
 
-
-int segtree::query(int index, int low, int high, int l, int r) 
+int segtree::query(int index, int low, int high, int l, int r)
 {
-    if (low > r || high < l) 
-        return INT_MAX; 
-    
-    if (low >= l && high <= r) 
+    if (low > r || high < l)
+        return INT_MAX;
+
+    if (low >= l && high <= r)
         return tree[index];
-    
+
     int mid = (low + high) / 2;
     int left = query(2 * index + 1, low, mid, l, r);
     int right = query(2 * index + 2, mid + 1, high, l, r);
@@ -49,20 +49,34 @@ int segtree::query(int index, int low, int high, int l, int r)
 
 int main()
 {
-    int n, q;
-    cout << "Enter the number of elements in the array: ";
-    cin >> n;
     int arr[MAX];
-    cout << "Enter array elements: " << endl;
-    for (int i = 0; i < n; i++) 
-        cin >> arr[i];
-  
+    int n = 0;
+
+    ifstream file("wheat_qua.txt");
+    if (!file)
+    {
+        cout << "File Not Found\n";
+        return 1;
+    }
+
+    string line;
+    cout << "Reading data from file:\n";
+    while (getline(file, line))
+    {
+        int id, quality;
+        sscanf(line.c_str(), "%d, %d", &id, &quality);
+        cout << "ID: " << id << ", Quality: " << quality << endl;
+        arr[n++] = quality;
+    }
+    file.close();
+
     segtree segmenttree(n, arr);
 
+    int q;
     cout << "Enter the number of queries: ";
     cin >> q;
 
-    for (int i = 0; i < q; i++) 
+    for (int i = 0; i < q; i)
     {
         int l, r;
         cout << "Enter the range (l r): ";
