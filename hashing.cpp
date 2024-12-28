@@ -98,16 +98,46 @@ public:
 
 int main() {
     HashTable hashTable;
-    hashTable.insert(5, "Amogh");
-    hashTable.insert(10, "Bhoomika");
-    hashTable.insert(15, "Ramya");
-    hashTable.insert(20, "Saanvi");
+    int choice, key;
+    string value;
 
-    cout << hashTable.search(10) << endl;
+    while (true) {
+        cout << "\n1. Insert\n";
+        cout << "2. Search\n";
+        cout << "3. Delete\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-    hashTable.remove(10);
+        switch (choice) {
+        case 1:
+            cout << "Enter key: ";
+            cin >> key;
+            cout << "Enter value: ";
+            cin >> value;
+            hashTable.insert(key, value);
+            break;
 
-    cout << hashTable.search(10) << endl;
+        case 2:
+            cout << "Enter key to search: ";
+            cin >> key;
+            cout << hashTable.search(key) << endl;
+            break;
+
+        case 3:
+            cout << "Enter key to delete: ";
+            cin >> key;
+            hashTable.remove(key);
+            break;
+
+        case 4:
+            cout << "Exiting program." << endl;
+            return 0;
+
+        default:
+            cout << "Invalid choice! Please try again." << endl;
+        }
+    }
 
     return 0;
 }
