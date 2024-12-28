@@ -1,101 +1,106 @@
 #include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <cstring>
-#include <queue>
 using namespace std;
+#define MAX 1000
 
-struct WheatProduction {
-    int area_id;
-    char area_name[30];
-    int production;
-};
-
-class wheat_production_data {
-private:
-    queue<WheatProduction> data_queue;
-    int global_count;
+class Queue {
+    int front, rear, size;
+    int queue[MAX];
 
 public:
-    wheat_production_data();
-    void welcome();
-    void load_from_file();
-    void display_data();
-    void process_data();
+    Queue()
+    {
+        front = size = 0;
+        rear = MAX - 1;
+    }
+    bool isFull()
+    {
+        return (size == MAX);
+    }
+
+    bool isEmpty()
+    {
+        return (size == 0);
+    }
+    void enqueue(int item)
+    {
+        if (isFull())
+        {
+            cout << "Queue is full!" << endl;
+            return;
+        }
+        rear = (rear + 1) % MAX;
+        queue[rear] = item;
+        size++;
+        cout << item << " enqueued to the queue" << endl;
+    }
+
+    int dequeue()
+    {
+        if (isEmpty())
+        {
+            cout << "Queue is empty!" << endl;
+            return -1;
+        }
+        int item = queue[front];
+        front = (front + 1) % MAX;
+        size--;
+        return item;
+    }
+
+    void printQueue()
+    {
+        if (isEmpty())
+        {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        cout << "Current queue: ";
+        for (int i = front, count = 0; count < size; count++)
+        {
+            cout << queue[i] << " ";
+            i = (i + 1) % MAX;
+        }
+        cout << endl;
+    }
 };
 
-wheat_production_data::wheat_production_data() {
-    global_count = 0;
-}
+int main()
+{
+    Queue q;
+    int c, value;
 
-void wheat_production_data::welcome() {
-    for (int i = 0; i < 80; i++)
-        cout << "*";
-    cout << "\n\n\t\t\t\tDELHI WHEAT PRODUCTION DATA\n\n\n";
-    for (int i = 0; i < 80; i++)
-        cout << "*";
-    cout << "\n\n";
-}
+    while(1)
+    {
+        cout << "\nMenu:\n";
+        cout << "1. Enqueue\n";
+        cout << "2. Dequeue\n";
+        cout << "3. Print queue\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> c;
 
-void wheat_production_data::load_from_file() {
-    ifstream file("delhi_wheat_production.txt");
-
-    if (!file) {
-        cout << "File Not Found\n";
-        return;
-    }
-
-    while (file >> global_count) {
-        WheatProduction wp;
-        file.ignore(); // Ignore the comma
-        file.getline(wp.area_name, 30, ',');
-        file >> wp.production;
-
-        wp.area_id = global_count;
-        data_queue.push(wp);
-
-        if (global_count >= 150) {
-            cout << "Maximum data limit reached.\n";
-            break;
+        switch (c)
+        {
+            case 1:
+                cout << "Enter value to enqueue: ";
+                cin >> value;
+                q.enqueue(value);
+                break;
+            case 2:
+                value = q.dequeue();
+                if (value != -1)
+                    cout << "Dequeued value: " << value << endl;
+                break;
+            case 3:
+                q.printQueue();
+                break;
+            case 4:
+                cout << "Exiting...\n";
+                exit(0);
+            default:
+                cout << "Invalid choice. Please try again.\n";
         }
     }
-
-    file.close();
-}
-
-void wheat_production_data::display_data() {
-    cout << setw(10) << "Area ID" << setw(20) << "Area Name" << setw(15) << "Production" << endl;
-
-    queue<WheatProduction> temp_queue = data_queue;
-    while (!temp_queue.empty()) {
-        WheatProduction wp = temp_queue.front();
-        temp_queue.pop();
-        cout << setw(10) << wp.area_id
-             << setw(20) << wp.area_name
-             << setw(15) << wp.production << endl;
-    }
-}
-
-void wheat_production_data::process_data() {
-    cout << "Processing data in entry order:" << endl;
-    cout << setw(10) << "Area ID" << setw(20) << "Area Name" << setw(15) << "Production" << endl;
-
-    while (!data_queue.empty()) {
-        WheatProduction wp = data_queue.front();
-        data_queue.pop();
-        cout << setw(10) << wp.area_id
-             << setw(20) << wp.area_name
-             << setw(15) << wp.production << endl;
-    }
-}
-
-int main() {
-    wheat_production_data engine;
-    engine.welcome();
-
-    engine.load_from_file();
-    engine.display_data();
-    engine.process_data();
 
     return 0;
 }
