@@ -29,18 +29,6 @@ void heapify(int a[], int n)
     }
 }
 
-void heap_sort(int a[], int n)
-{
-    int temp;
-    for (int i = n; i >= 1; i--) 
-    {
-        temp = a[1];
-        a[1] = a[i];
-        a[i] = temp;
-        heapify(a, i - 1);
-    }
-}
-
 int main() 
 {
     int a[100], n;
@@ -50,9 +38,9 @@ int main()
     for (int i = 1; i <= n; i++) 
         cin >> a[i];
     heapify(a, n);
-    heap_sort(a, n);
-    cout << "Sorted array:" << endl;
+    cout << "Max Heap:" << endl;
     for (int i = 1; i <= n; i++) 
-        cout << a[i] << endl;
+        cout << a[i] << " ";
+    cout << endl;
     return 0;
 }
