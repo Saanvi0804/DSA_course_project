@@ -4,12 +4,14 @@ using namespace std;
 
 const int TABLE_SIZE = 10;
 
-struct Node {
+struct Node 
+{
     int key;
     string value;
     Node* next;
 
-    Node(int k, const string& v) {
+    Node(int k, const string& v) 
+    {
         key = k;
         value = v;
         next = nullptr;
@@ -26,7 +28,8 @@ private:
     }
 
 public:
-    HashTable() {
+    HashTable()
+    {
         for (int i = 0; i < TABLE_SIZE; ++i)
             table[i] = nullptr;
     }
@@ -96,12 +99,14 @@ public:
     }
 };
 
-int main() {
+int main()
+{
     HashTable hashTable;
     int choice, key;
     string value;
 
-    while (true) {
+    while (1) 
+    {
         cout << "\n1. Insert\n";
         cout << "2. Search\n";
         cout << "3. Delete\n";
@@ -109,7 +114,8 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice) {
+        switch (choice)
+         {
         case 1:
             cout << "Enter key: ";
             cin >> key;
