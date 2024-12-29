@@ -43,7 +43,6 @@ void QuickSort(int A[], int l, int r)
     }
 }
 
-// Utility function to print the array
 void PrintArray(int A[], int size) 
 {
     for (int i = 0; i < size; i++) 
@@ -53,8 +52,8 @@ void PrintArray(int A[], int size)
 
 int main() {
     int choice;
-    int A[100]; // Array with a maximum of 100 elements
-    int n = 0; // Number of elements in the array
+    int A[100];
+    int n = 0; 
 
     while (1) 
     {
